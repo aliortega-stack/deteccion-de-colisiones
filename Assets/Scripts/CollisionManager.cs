@@ -2,10 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollisionManager : MonoBehaviour
+public class FireworksController : MonoBehaviour
 {
-    void OnCollisionEnter2D(Collision2D collision)
+    public Animator[] fireworkAnimators;
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Collision detected with " + collision.gameObject.name);
+        Debug.Log("Entrando en la zona. ¡Activar fuegos artificiales!");
+        SetFireworksState(true);
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        Debug.Log("Saliendo de la zona. Detener fuegos artificiales.");
+        SetFireworksState(false);
+    }
+
+    void SetFireworksState(bool isTouching)
+    {
+        foreach (Animator anim in fireworkAnimators)
+        {
+            anim.SetBool("isTouching", isTouching);
+        }
     }
 }
